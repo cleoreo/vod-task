@@ -8,6 +8,10 @@ import { logOut } from 'actions';
 import { Container, utils } from 'styled-minimal';
 import Icon from 'components/Icon';
 import Logo from 'components/Logo';
+import { Link } from 'react-router-dom';
+import path from '../routes';
+
+import './style/Header.scss';
 
 const { responsive, spacer } = utils;
 
@@ -78,9 +82,10 @@ export default class Header extends React.PureComponent {
         <HeaderContainer>
           <Logo type="logo" />
           <Logout onClick={this.handleClickLogout}>
-            <span>logout</span>
+            <span className="test">logout</span>
             <Icon name="sign-out" width={16} />
           </Logout>
+          <Link to={path.test}>Test</Link>
         </HeaderContainer>
       </HeaderWrapper>
     );

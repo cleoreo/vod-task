@@ -9,12 +9,12 @@ import { getRepos, showAlert, switchMenu } from 'actions';
 import { STATUS } from 'constants/index';
 
 import {
-  ButtonGroup,
   Button,
+  ButtonGroup,
   Flex,
   Heading,
-  Link,
   Image,
+  Link,
   Paragraph,
   theme,
   utils,
@@ -205,4 +205,9 @@ function mapStateToProps(state) {
   return { github: state.github };
 }
 
-export default connect(mapStateToProps)(GitHub);
+const mapDispatchToProps = dispatch => ({});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(GitHub);

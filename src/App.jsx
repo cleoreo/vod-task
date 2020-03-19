@@ -15,6 +15,7 @@ import config from 'config';
 import { showAlert } from 'actions';
 
 import Home from 'routes/Home';
+import Test from 'routes/Test';
 import Private from 'routes/Private';
 import NotFound from 'routes/NotFound';
 
@@ -25,6 +26,7 @@ import Footer from 'components/Footer';
 import GlobalStyles from 'components/GlobalStyles';
 import RoutePublic from 'components/RoutePublic';
 import RoutePrivate from 'components/RoutePrivate';
+import path from './routes';
 
 const AppWrapper = styled.div`
   display: flex;
@@ -81,17 +83,9 @@ export class App extends React.Component {
             {user.isAuthenticated && <Header dispatch={dispatch} user={user} />}
             <Main isAuthenticated={user.isAuthenticated}>
               <Switch>
-                <RoutePublic
-                  isAuthenticated={user.isAuthenticated}
-                  path="/"
-                  exact
-                  component={Home}
-                />
-                <RoutePrivate
-                  isAuthenticated={user.isAuthenticated}
-                  path="/private"
-                  component={Private}
-                />
+                <Route exact path={path.home} component={Home} />
+                <Route path={path.test} component={Test} />
+                <Route path={path.private} component={Private} />
                 <Route component={NotFound} />
               </Switch>
             </Main>
