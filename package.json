@@ -1,22 +1,28 @@
 {
-  "name": "react-redux-saga-boilerplate",
-  "description": "Boilerplate with React and Redux with Redux Saga",
-  "version": "2019.10.0",
-  "author": "Gil Barbara <gilbarbara@gmail.com>",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gilbarbara/react-redux-saga-boilerplate"
+  "name": "vod-task",
+  "description": "Vod task in react",
+  "version": "0.1",
+  "author": "Cleo Chan",
+  "scripts": {
+    "start": "node tools/start",
+    "build": "node tools/build",
+    "build:serve": "npm run build && npm run serve",
+    "analyze": "NODE_ENV=production webpack --config config/webpack.config.js --profile --json > webpack.stats.json",
+    "lint": "eslint  --ext .js --ext .jsx src config test tools",
+    "lint:styles": "stylelint 'src/**/*.{js,jsx}'",
+    "test": "is-ci \"test:coverage\" \"test:watch\"",
+    "test:coverage": "jest --bail --coverage",
+    "test:watch": "jest --watch --verbose",
+    "test:e2e": "start-server-and-test serve http://localhost:3000 test:e2e:run",
+    "test:e2e:run": "cypress run --record --key adbe5dd9-10e2-42aa-b679-da6d31ae5d51",
+    "test:e2e:dev": "cypress open",
+    "format": "prettier \"**/*.{js,jsx}\" --write",
+    "validate": "npm run lint && npm run lint:styles && npm run test:coverage && flow && npm run build && npm run test:e2e && size-limit",
+    "serve": "serve --listen 3000 build",
+    "deploy": "node tools/deploy",
+    "publish": "node tools/publish",
+    "size": "npm run build && size-limit"
   },
-  "bugs": "https://github.com/gilbarbara/react-redux-saga-boilerplate/issues",
-  "license": "MIT",
-  "keywords": [
-    "React",
-    "React-Router",
-    "Redux",
-    "Redux-Saga",
-    "Webpack",
-    "ES6"
-  ],
   "dependencies": {
     "classlist-polyfill": "^1.2.0",
     "events-polyfill": "^2.1.2",
@@ -172,26 +178,6 @@
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.8.2",
     "workbox-webpack-plugin": "^4.3.1"
-  },
-  "scripts": {
-    "start": "node tools/start",
-    "build": "node tools/build",
-    "build:serve": "npm run build && npm run serve",
-    "analyze": "NODE_ENV=production webpack --config config/webpack.config.js --profile --json > webpack.stats.json",
-    "lint": "eslint  --ext .js --ext .jsx src config test tools",
-    "lint:styles": "stylelint 'src/**/*.{js,jsx}'",
-    "test": "is-ci \"test:coverage\" \"test:watch\"",
-    "test:coverage": "jest --bail --coverage",
-    "test:watch": "jest --watch --verbose",
-    "test:e2e": "start-server-and-test serve http://localhost:3000 test:e2e:run",
-    "test:e2e:run": "cypress run --record --key adbe5dd9-10e2-42aa-b679-da6d31ae5d51",
-    "test:e2e:dev": "cypress open",
-    "format": "prettier \"**/*.{js,jsx}\" --write",
-    "validate": "npm run lint && npm run lint:styles && npm run test:coverage && flow && npm run build && npm run test:e2e && size-limit",
-    "serve": "serve --listen 3000 build",
-    "deploy": "node tools/deploy",
-    "publish": "node tools/publish",
-    "size": "npm run build && size-limit"
   },
   "prettier": {
     "printWidth": 100,
