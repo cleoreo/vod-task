@@ -36,7 +36,7 @@ module.exports = webpackEnv => {
 
   // Webpack uses `publicPath` to determine where the app is being served from.
   // In development, we always serve from the root. This makes config easier.
-  const { publicPath } = paths;
+  const publicPath = isProd ? '/vod-task' : paths.publicPath;
   // Some apps do not use client-side routing with pushState.
   // For these, "homepage" can be set to "." to enable relative asset paths.
   const shouldUseRelativeAssetPaths = publicPath === './';
@@ -44,7 +44,7 @@ module.exports = webpackEnv => {
   // `publicUrl` is just like `publicPath`, but we will provide it to our app
   // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
   // Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
-  const publicUrl = publicPath.slice(0, -1);
+  const publicUrl = isProd ? '/vod-task/' : publicPath.slice(0, -1);
   // Get environment variables to inject into our app.
   const env = getClientEnvironment(publicUrl);
 
@@ -83,7 +83,7 @@ module.exports = webpackEnv => {
     isProd && {
       loader: MiniCssExtractPlugin.loader,
       options: {
-        ...(shouldUseRelativeAssetPaths ? { publicPath: '../../' } : undefined),
+        ...(shouldUseRelativeAssetPaths ? { publicPath: '../../' } : { publicPath: './' }),
       },
     },
     {

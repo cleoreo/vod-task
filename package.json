@@ -1,7 +1,7 @@
 {
   "name": "vod-task",
   "description": "Vod task in react",
-  "version": "0.1",
+  "version": "1.0.0",
   "author": "Cleo Chan",
   "scripts": {
     "start": "node tools/start",
@@ -19,10 +19,12 @@
     "format": "prettier \"**/*.{js,jsx}\" --write",
     "validate": "npm run lint && npm run lint:styles && npm run test:coverage && flow && npm run build && npm run test:e2e && size-limit",
     "serve": "serve --listen 3000 build",
-    "deploy": "node tools/deploy",
     "publish": "node tools/publish",
-    "size": "npm run build && size-limit"
+    "size": "npm run build && size-limit",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
+  "homepage": "https://cleoreo.github.io/vod-task/./",
   "dependencies": {
     "classlist-polyfill": "^1.2.0",
     "events-polyfill": "^2.1.2",
@@ -121,6 +123,7 @@
     "file-loader": "^4.2.0",
     "flow-bin": "^0.109.0",
     "fs-extra": "^8.1.0",
+    "gh-pages": "^2.2.0",
     "git-rev-webpack-plugin": "^0.2.2",
     "hoist-non-react-statics": "^3.3.0",
     "html-loader": "^0.5.5",
@@ -200,12 +203,6 @@
     "> 0.2%",
     "not dead"
   ],
-  "husky": {
-    "hooks": {
-      "post-merge": "repo-tools install-packages",
-      "pre-commit": "repo-tools check-remote && lint-staged && flow"
-    }
-  },
   "size-limit": [
     {
       "path": "./build/scripts/*.js",
