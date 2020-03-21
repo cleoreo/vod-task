@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/vod-taskprecache-manifest.9babb61f84d09f48418f7ceb83d8ff1b.js"
+  "/vod-taskprecache-manifest.592a957b8ef0975e5ce3dac9a3d5782e.js"
 );
 
 self.addEventListener('message', (event) => {
