@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c6a306f83eeb8989d1f9",
+    "revision": "71a936ac1f0f2c1b2b89",
     "url": "/vod-taskcss/bundle.4a9d9c8.css"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/vod-taskindex.html"
   },
   {
-    "revision": "c6a306f83eeb8989d1f9",
+    "revision": "71a936ac1f0f2c1b2b89",
     "url": "/vod-taskscripts/bundle.4a9d9c8.js"
   },
   {
