@@ -7,6 +7,7 @@ const Api = (baseURL = config.proxyUrl + config.API_URL) => {
     baseURL,
     headers: {
       'Cache-Control': 'no-cache',
+      'Content-Type': 'application/json',
     },
     timeout: 10000,
   });

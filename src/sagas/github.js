@@ -15,19 +15,17 @@ import Api from '../api/Api';
  *
  */
 export function* getRepos({ payload }) {
-  try {
-    const response = yield Api().movieGetMovies();
-    console.log(response);
-
+  const response = yield call(Api().movieGetMovies);
+  console.log(response);
+  if (response.ok) {
     yield put({
       type: ActionTypes.GITHUB_GET_REPOS_SUCCESS,
-      payload: { data: response.data.items },
+      payload: { data: response.data },
     });
-  } catch (err) {
-    /* istanbul ignore next */
+  } else {
     yield put({
       type: ActionTypes.GITHUB_GET_REPOS_FAILURE,
-      payload: err,
+      payload: response,
     });
   }
 }

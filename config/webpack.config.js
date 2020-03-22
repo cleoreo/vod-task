@@ -214,7 +214,7 @@ module.exports = webpackEnv => {
                       optimizationLevel: 5,
                     },
                     pngquant: {
-                      quality: '75-90',
+                      quality: [0.75, 0.9],
                     },
                   },
                 },
@@ -335,6 +335,11 @@ module.exports = webpackEnv => {
       new HtmlPlugin(htmlPluginOptions),
       new InterpolateHtmlPlugin(HtmlPlugin, env.raw),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+      }),
       isProd &&
         shouldInlineRuntimeChunk &&
         new InlineChunkHtmlPlugin(HtmlPlugin, [/runtime~.+[.]js/]),
