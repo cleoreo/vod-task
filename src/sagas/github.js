@@ -4,9 +4,9 @@
  */
 
 import { all, call, put, takeLatest } from 'redux-saga/effects';
-import { request } from 'modules/client';
 
 import { ActionTypes } from 'constants/index';
+import Api from '../api/Api';
 
 /**
  * Get Repos
@@ -16,13 +16,12 @@ import { ActionTypes } from 'constants/index';
  */
 export function* getRepos({ payload }) {
   try {
-    const response = yield call(
-      request,
-      `https://api.github.com/search/repositories?q=${payload.query}&sort=stars`,
-    );
+    const response = yield Api().movieGetMovies();
+    console.log(response);
+
     yield put({
       type: ActionTypes.GITHUB_GET_REPOS_SUCCESS,
-      payload: { data: response.items },
+      payload: { data: response.data.items },
     });
   } catch (err) {
     /* istanbul ignore next */

@@ -3,13 +3,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import config from 'config';
-import { login } from 'actions/index';
-
 import { Button, Container, Text, utils } from 'styled-minimal';
 import Background from 'components/Background';
 import Icon from 'components/Icon';
-import Logo from 'components/Logo';
+import history from '../modules/history';
+import path from './index';
 
 const { spacer } = utils;
 
@@ -55,37 +53,33 @@ const Heading = styled.h1`
 export class Home extends React.PureComponent {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }),
     user: PropTypes.object.isRequired,
   };
 
   handleClickLogin = () => {
-    const { dispatch } = this.props;
-
-    dispatch(login());
+    history.push(path.private);
+    // this.props.history.push(path.private);
   };
 
   render() {
     const { user } = this.props;
 
     return (
-      <Background key="Home" data-testid="HomeWrapper">
-        <HomeContainer verticalPadding>
-          <Header>
-            <Logo type="logo" />
-          </Header>
-          <Heading>{config.name}</Heading>
-          <Button
-            animate={user.status === 'running'}
-            onClick={this.handleClickLogin}
-            size="xl"
-            textTransform="uppercase"
-            data-testid="Login"
-          >
-            <Icon name="sign-in" />
-            <Text ml={2}>Start</Text>
-          </Button>
-        </HomeContainer>
-      </Background>
+      <HomeContainer key="Home" data-testid="HomeWrapper" verticalPadding>
+
+        <Button
+          animate={user.status === 'running'}
+          onClick={this.handleClickLogin}
+          size="xl"
+          textTransform="uppercase"
+          data-testid="Login"
+        >
+          <Text ml={2}>Start</Text>
+        </Button>
+      </HomeContainer>
     );
   }
 }

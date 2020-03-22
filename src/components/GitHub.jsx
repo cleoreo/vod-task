@@ -106,35 +106,37 @@ export class GitHub extends React.Component {
   }
 
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    getGHRepos: PropTypes.func.isRequired,
     github: PropTypes.object.isRequired,
+    showLoginAlert: PropTypes.func.isRequired,
+    switchGHMenu: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
     const { query } = this.state;
-    const { dispatch } = this.props;
+    const { getGHRepos } = this.props;
 
-    dispatch(getRepos(query));
+    getGHRepos(query);
   }
 
   componentDidUpdate(prevProps) {
-    const { dispatch, github } = this.props;
+    const { github, showLoginAlert } = this.props;
     const { changedTo } = treeChanges(prevProps, this.props);
 
     if (changedTo('github.repos.status', STATUS.ERROR)) {
-      dispatch(showAlert(github.repos.message, { variant: 'danger' }));
+      showLoginAlert(github.repos.message, { variant: 'danger' });
     }
   }
 
   handleClick = e => {
     const { query } = e.currentTarget.dataset;
-    const { dispatch } = this.props;
 
     this.setState({
       query,
     });
 
-    dispatch(switchMenu(query));
+    const { switchGHMenu } = this.props;
+    switchGHMenu(query);
   };
 
   render() {
@@ -205,7 +207,11 @@ function mapStateToProps(state) {
   return { github: state.github };
 }
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  switchGHMenu: query => dispatch(switchMenu(query)),
+  getGHRepos: query => dispatch(getRepos(query)),
+  showLoginAlert: (messages, params) => dispatch(showAlert(messages, params)),
+});
 
 export default connect(
   mapStateToProps,

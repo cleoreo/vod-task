@@ -1,19 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { appColor, headerHeight } from 'modules/theme';
 
-import { logOut } from 'actions';
-
 import { Container, utils } from 'styled-minimal';
-import Icon from 'components/Icon';
-import Logo from 'components/Logo';
 import { Link } from 'react-router-dom';
 import path from '../routes';
 
 import './style/Header.scss';
 
-const { responsive, spacer } = utils;
+const { spacer } = utils;
 
 const HeaderWrapper = styled.header`
   background-color: #113740;
@@ -45,47 +40,17 @@ const HeaderContainer = styled(Container)`
   padding-top: ${spacer(2)};
 `;
 
-const Logout = styled.button`
-  align-items: center;
-  color: #fff;
-  display: flex;
-  font-size: 1.3rem;
-  padding: ${spacer(2)};
-
-  ${responsive({ lg: 'font-size: 1.6rem;' })}; /* stylelint-disable-line */
-
-  &.active {
-    color: #fff;
-  }
-
-  span {
-    display: inline-block;
-    margin-right: 0.4rem;
-    text-transform: uppercase;
-  }
+const History = styled(Link)`
+  margin-left: auto;
+  color: white;
 `;
 
 export default class Header extends React.PureComponent {
-  static propTypes = {
-    dispatch: PropTypes.func.isRequired,
-  };
-
-  handleClickLogout = () => {
-    const { dispatch } = this.props;
-
-    dispatch(logOut());
-  };
-
   render() {
     return (
       <HeaderWrapper>
         <HeaderContainer>
-          <Logo type="logo" />
-          <Logout onClick={this.handleClickLogout}>
-            <span className="test">logout</span>
-            <Icon name="sign-out" width={16} />
-          </Logout>
-          <Link to={path.test}>Test</Link>
+          <History to={path.history}>History</History>
         </HeaderContainer>
       </HeaderWrapper>
     );

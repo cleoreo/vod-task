@@ -2,17 +2,15 @@ import { hot } from 'react-hot-loader/root';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Router, Switch, Route } from 'react-router-dom';
+import { Route, Router, Switch } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import styled, { css, ThemeProvider } from 'styled-components';
-import treeChanges from 'tree-changes';
+import styled, { ThemeProvider } from 'styled-components';
 
 import history from 'modules/history';
 import theme, { headerHeight } from 'modules/theme';
 import { utils } from 'styled-minimal';
 
 import config from 'config';
-import { showAlert } from 'actions';
 
 import Home from 'routes/Home';
 import Test from 'routes/Test';
@@ -24,8 +22,6 @@ import SystemAlerts from 'components/SystemAlerts';
 
 import Footer from 'components/Footer';
 import GlobalStyles from 'components/GlobalStyles';
-import RoutePublic from 'components/RoutePublic';
-import RoutePrivate from 'components/RoutePrivate';
 import path from './routes';
 
 const AppWrapper = styled.div`
@@ -37,16 +33,9 @@ const AppWrapper = styled.div`
   transition: opacity 0.5s;
 `;
 
-const MainPrivate = ({ isAuthenticated }) =>
-  isAuthenticated &&
-  css`
-    padding: ${utils.px(headerHeight)} 0 0;
-  `;
-
 const Main = styled.main`
   min-height: 100vh;
-
-  ${MainPrivate};
+  padding: ${utils.px(headerHeight)} 0 0;
 `;
 
 export class App extends React.Component {
@@ -55,23 +44,13 @@ export class App extends React.Component {
     user: PropTypes.object.isRequired,
   };
 
-  componentDidUpdate(prevProps) {
-    const { dispatch } = this.props;
-    const { changedTo } = treeChanges(prevProps, this.props);
-
-    /* istanbul ignore else */
-    if (changedTo('user.isAuthenticated', true)) {
-      dispatch(showAlert('Hello! And welcome!', { variant: 'success', icon: 'bell' }));
-    }
-  }
-
   render() {
     const { dispatch, user } = this.props;
 
     return (
       <Router history={history}>
         <ThemeProvider theme={theme}>
-          <AppWrapper logged={user.isAuthenticated}>
+          <AppWrapper>
             <Helmet
               defer={false}
               htmlAttributes={{ lang: 'pt-br' }}
@@ -80,11 +59,11 @@ export class App extends React.Component {
               titleTemplate={`%s | ${config.name}`}
               titleAttributes={{ itemprop: 'name', lang: 'pt-br' }}
             />
-            {user.isAuthenticated && <Header dispatch={dispatch} user={user} />}
-            <Main isAuthenticated={user.isAuthenticated}>
+            <Header dispatch={dispatch} user={user} />
+            <Main>
               <Switch>
                 <Route exact path={path.home} component={Home} />
-                <Route path={path.test} component={Test} />
+                <Route exact path={path.history} component={Test} />
                 <Route path={path.private} component={Private} />
                 <Route component={NotFound} />
               </Switch>

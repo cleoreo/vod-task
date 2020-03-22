@@ -3,7 +3,7 @@ const baseUrl = process.env.NODE_ENV === 'production' ? '/vod-task' : '';
 const path = {
   home: `${baseUrl}/`,
   private: `${baseUrl}/private`,
-  test: `${baseUrl}/test`,
+  history: `${baseUrl}/history`,
 };
 
 export default path;
