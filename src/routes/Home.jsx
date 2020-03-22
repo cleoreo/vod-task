@@ -1,16 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-
 // styles
 import styled from 'styled-components';
 import './styles/home.scss';
-
 // components
 import { Button, Container, Text, utils } from 'styled-minimal';
-import Icon from 'components/Icon';
 import OwlCarousel from 'react-owl-carousel';
-
+import VideoPlayer from 'react-video-js-player';
 // routes
 import path from './index';
 import history from '../modules/history';
@@ -70,11 +67,21 @@ export class Home extends React.PureComponent {
     // this.props.history.push(path.private);
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      video: {
+        src: 'http://techslides.com/demos/sample-videos/small.mp4',
+      },
+    };
+  }
+
   render() {
     const { user } = this.props;
-
+    const { video } = this.state;
     return (
       <HomeContainer key="Home" data-testid="HomeWrapper" verticalPadding>
+        <VideoPlayer controls={true} preload="auto" src={video.src} width="720" height="420" />
         <OwlCarousel className="owl-theme" loop margin={10} nav>
           <div className="item">
             <h4>1</h4>
