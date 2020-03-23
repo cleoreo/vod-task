@@ -1,9 +1,7 @@
 import app from './app';
-import github from './github';
-import user from './user';
+import video from './video';
 
 export default {
   ...app,
-  ...github,
-  ...user,
+  ...video,
 };

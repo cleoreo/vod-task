@@ -5,7 +5,7 @@
 
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 
-import { ActionTypes } from 'constants/index';
+import { VideoActionTypes } from 'constants/index';
 import Api from '../api/Api';
 
 /**
@@ -14,17 +14,17 @@ import Api from '../api/Api';
  * @param {Object} action
  *
  */
-export function* getRepos({ payload }) {
+export function* getVideoList({ payload }) {
   const response = yield call(Api().movieGetMovies);
   console.log(response);
   if (response.ok) {
     yield put({
-      type: ActionTypes.GITHUB_GET_REPOS_SUCCESS,
+      type: VideoActionTypes.VIDEO_GET_LIST_SUCCESS,
       payload: { data: response.data },
     });
   } else {
     yield put({
-      type: ActionTypes.GITHUB_GET_REPOS_FAILURE,
+      type: VideoActionTypes.VIDEO_GET_LIST_FAILURE,
       payload: response,
     });
   }
@@ -34,5 +34,5 @@ export function* getRepos({ payload }) {
  * GitHub Sagas
  */
 export default function* root() {
-  yield all([takeLatest(ActionTypes.GITHUB_GET_REPOS, getRepos)]);
+  yield all([takeLatest(VideoActionTypes.VIDEO_GET_LIST_REQUEST, getVideoList)]);
 }

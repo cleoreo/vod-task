@@ -2,24 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import treeChanges from 'tree-changes';
 import { appColor } from 'modules/theme';
 
-import { getRepos, showAlert, switchMenu } from 'actions';
-import { STATUS } from 'constants/index';
-
-import {
-  Button,
-  ButtonGroup,
-  Flex,
-  Heading,
-  Image,
-  Link,
-  Paragraph,
-  theme,
-  utils,
-} from 'styled-minimal';
+import { Link, theme, utils } from 'styled-minimal';
 import Loader from 'components/Loader';
+import { getVideoList, showAlert } from '../actions';
 
 const { responsive, spacer } = utils;
 const { grays } = theme;
@@ -101,102 +88,25 @@ export class GitHub extends React.Component {
     super(props);
 
     this.state = {
-      query: 'react',
+      video: props.video,
     };
   }
 
   static propTypes = {
-    getGHRepos: PropTypes.func.isRequired,
-    github: PropTypes.object.isRequired,
+    getVideoList: PropTypes.func.isRequired,
     showLoginAlert: PropTypes.func.isRequired,
-    switchGHMenu: PropTypes.func.isRequired,
+    video: PropTypes.object.isRequired,
   };
 
   componentDidMount() {
-    const { query } = this.state;
-    const { getGHRepos } = this.props;
-
-    getGHRepos(query);
+    const { getVideoList } = this.props;
+    getVideoList();
   }
-
-  componentDidUpdate(prevProps) {
-    const { github, showLoginAlert } = this.props;
-    const { changedTo } = treeChanges(prevProps, this.props);
-
-    if (changedTo('github.repos.status', STATUS.ERROR)) {
-      showLoginAlert(github.repos.message, { variant: 'danger' });
-    }
-  }
-
-  handleClick = e => {
-    const { query } = e.currentTarget.dataset;
-
-    this.setState({
-      query,
-    });
-
-    const { switchGHMenu } = this.props;
-    switchGHMenu(query);
-  };
 
   render() {
-    const { query } = this.state;
-    const { github } = this.props;
-    const data = github.repos.data[query] || [];
-    let output;
-
-    if (github.repos.status === STATUS.SUCCESS) {
-      if (data.length) {
-        output = (
-          <GitHubGrid data-type={query} data-testid="GitHubGrid">
-            {github.repos.data[query].map(d => (
-              <li key={d.id}>
-                <Item href={d.html_url} target="_blank">
-                  <Image src={d.owner.avatar_url} alt={d.owner.login} />
-                  <ItemHeader>
-                    <Heading as="h5" lineHeight={1}>
-                      {d.name}
-                    </Heading>
-                    <small>{d.owner.login}</small>
-                  </ItemHeader>
-                  <Paragraph>{d.description}</Paragraph>
-                </Item>
-              </li>
-            ))}
-          </GitHubGrid>
-        );
-      } else {
-        output = <h3>Nothing found</h3>;
-      }
-    } else {
-      output = <Loader block />;
-    }
-
     return (
       <div key="GitHub" data-testid="GitHubWrapper">
-        <Flex justifyContent="center">
-          <ButtonGroup role="group" aria-label="GitHub Selector" data-testid="GitHubSelector">
-            <Button
-              animate={query === 'react' && github.repos.status === 'running'}
-              bordered={query !== 'react'}
-              size="lg"
-              data-query="react"
-              onClick={this.handleClick}
-            >
-              React
-            </Button>
-            <Button
-              animate={query === 'redux' && github.repos.status === 'running'}
-              bordered={query !== 'redux'}
-              size="lg"
-              data-query="redux"
-              onClick={this.handleClick}
-            >
-              Redux
-            </Button>
-          </ButtonGroup>
-        </Flex>
-        {output}
+        <Loader block />
       </div>
     );
   }
@@ -204,12 +114,11 @@ export class GitHub extends React.Component {
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
-  return { github: state.github };
+  return { video: state.video };
 }
 
 const mapDispatchToProps = dispatch => ({
-  switchGHMenu: query => dispatch(switchMenu(query)),
-  getGHRepos: query => dispatch(getRepos(query)),
+  getVideoList: () => dispatch(getVideoList()),
   showLoginAlert: (messages, params) => dispatch(showAlert(messages, params)),
 });
 

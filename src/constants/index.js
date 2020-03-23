@@ -10,19 +10,15 @@ import { keyMirror } from 'modules/helpers';
  * @memberof Constants
  */
 export const ActionTypes = keyMirror({
-  SWITCH_MENU: undefined,
   EXCEPTION: undefined,
-  USER_LOGIN: undefined,
-  USER_LOGIN_SUCCESS: undefined,
-  USER_LOGIN_FAILURE: undefined,
-  USER_LOGOUT: undefined,
-  USER_LOGOUT_SUCCESS: undefined,
-  USER_LOGOUT_FAILURE: undefined,
-  GITHUB_GET_REPOS: undefined,
-  GITHUB_GET_REPOS_SUCCESS: undefined,
-  GITHUB_GET_REPOS_FAILURE: undefined,
   SHOW_ALERT: undefined,
   HIDE_ALERT: undefined,
+});
+
+export const VideoActionTypes = keyMirror({
+  VIDEO_GET_LIST_REQUEST: undefined,
+  VIDEO_GET_LIST_SUCCESS: undefined,
+  VIDEO_GET_LIST_FAILURE: undefined,
 });
 
 /**

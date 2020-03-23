@@ -71,7 +71,7 @@ export class Home extends React.PureComponent {
     super(props);
     this.state = {
       video: {
-        src: 'http://techslides.com/demos/sample-videos/small.mp4',
+        src: 'https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4',
       },
     };
   }
