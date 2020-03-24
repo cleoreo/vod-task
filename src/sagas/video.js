@@ -9,18 +9,18 @@ import { VideoActionTypes } from 'constants/index';
 import Api from '../api/Api';
 
 /**
- * Get Repos
+ * Get Video List
  *
  * @param {Object} action
  *
  */
-export function* getVideoList({ payload }) {
+export function* getVideoList() {
   const response = yield call(Api().movieGetMovies);
-  console.log(response);
+
   if (response.ok) {
     yield put({
       type: VideoActionTypes.VIDEO_GET_LIST_SUCCESS,
-      payload: { data: response.data },
+      payload: response.data,
     });
   } else {
     yield put({

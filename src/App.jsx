@@ -13,7 +13,6 @@ import { utils } from 'styled-minimal';
 import config from 'config';
 
 import Home from 'routes/Home';
-import Test from 'routes/Test';
 import Private from 'routes/Private';
 import NotFound from 'routes/NotFound';
 
@@ -41,11 +40,10 @@ const Main = styled.main`
 export class App extends React.Component {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
-    user: PropTypes.object.isRequired,
   };
 
   render() {
-    const { dispatch, user } = this.props;
+    const { dispatch } = this.props;
 
     return (
       <Router history={history}>
@@ -59,11 +57,11 @@ export class App extends React.Component {
               titleTemplate={`%s | ${config.name}`}
               titleAttributes={{ itemprop: 'name', lang: 'pt-br' }}
             />
-            <Header dispatch={dispatch} user={user} />
+            <Header dispatch={dispatch} />
             <Main>
               <Switch>
                 <Route exact path={path.home} component={Home} />
-                <Route exact path={path.history} component={Test} />
+                <Route exact path={path.history} component={Private} />
                 <Route path={path.private} component={Private} />
                 <Route component={NotFound} />
               </Switch>
@@ -80,9 +78,7 @@ export class App extends React.Component {
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
-  return {
-    user: state.user,
-  };
+  return {};
 }
 
 export default hot(connect(mapStateToProps)(App));
