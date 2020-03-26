@@ -54,6 +54,7 @@ const Heading = styled.h1`
 export class Home extends React.PureComponent {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
+    videoToPlay: PropTypes.object,
   };
 
   constructor(props) {
@@ -79,10 +80,19 @@ export class Home extends React.PureComponent {
 
   render() {
     const { video } = this.state;
+    const { videoToPlay } = this.props;
     return (
       <HomeContainer key="Home" data-testid="HomeWrapper" verticalPadding>
+        {videoToPlay ? (
+          <VideoPlayer
+            controls={true}
+            preload="auto"
+            src={videoToPlay.contents[0].url}
+            width="720"
+            height="420"
+          />
+        ) : null}
         <VideoCarousel />
-        <VideoPlayer controls={true} preload="auto" src={video.src} width="720" height="420" />
       </HomeContainer>
     );
   }
@@ -90,7 +100,9 @@ export class Home extends React.PureComponent {
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
-  return {};
+  return {
+    videoToPlay: state.video.videoPlaying,
+  };
 }
 
 export default connect(mapStateToProps)(Home);
