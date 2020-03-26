@@ -6,7 +6,7 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 
 import { VideoActionTypes } from 'constants/index';
-import Api from '../api/Api';
+import Api from '../api';
 
 /**
  * Get Video List

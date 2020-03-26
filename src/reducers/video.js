@@ -21,6 +21,7 @@ export default {
       [VideoActionTypes.VIDEO_GET_LIST_SUCCESS]: (draft, { payload }) => {
         draft.videoList.data = payload;
         draft.videoList.success = true;
+        draft.videoList.error = false;
         draft.fetching = null;
       },
       [VideoActionTypes.VIDEO_GET_LIST_FAILURE]: (draft, { payload }) => {
