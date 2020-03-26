@@ -2,24 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import treeChanges from 'tree-changes';
+// components
+import MovieCard from 'components/MovieCard';
+import OwlCarousel from 'react-owl-carousel';
+// style
+import { Link, theme, utils } from 'styled-minimal';
 import { appColor } from 'modules/theme';
-
-import { getRepos, showAlert, switchMenu } from 'actions';
-import { STATUS } from 'constants/index';
-
-import {
-  Button,
-  ButtonGroup,
-  Flex,
-  Heading,
-  Image,
-  Link,
-  Paragraph,
-  theme,
-  utils,
-} from 'styled-minimal';
-import Loader from 'components/Loader';
+// action
+import { getVideoList } from '../actions';
 
 const { responsive, spacer } = utils;
 const { grays } = theme;
@@ -101,116 +91,81 @@ export class VideoCarousel extends React.Component {
     super(props);
 
     this.state = {
-      query: 'react',
+      videoList: props.videoList,
+      width: window.innerWidth,
+      height: window.innerHeight,
     };
+    props.getVideoList();
   }
 
   static propTypes = {
-    getGHRepos: PropTypes.func.isRequired,
-    github: PropTypes.object.isRequired,
-    showLoginAlert: PropTypes.func.isRequired,
-    switchGHMenu: PropTypes.func.isRequired,
+    getVideoList: PropTypes.func.isRequired,
+    videoList: PropTypes.object.isRequired,
   };
 
   componentDidMount() {
-    const { query } = this.state;
-    const { getGHRepos } = this.props;
-
-    getGHRepos(query);
+    this.updateDimensions();
+    window.addEventListener('resize', this.updateDimensions);
   }
 
-  componentDidUpdate(prevProps) {
-    const { github, showLoginAlert } = this.props;
-    const { changedTo } = treeChanges(prevProps, this.props);
-
-    if (changedTo('github.repos.status', STATUS.ERROR)) {
-      showLoginAlert(github.repos.message, { variant: 'danger' });
-    }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
   }
 
-  handleClick = e => {
-    const { query } = e.currentTarget.dataset;
+  updateDimensions = () => {
+    const w = window;
+    const d = document;
+    const { documentElement } = d;
+    const body = d.getElementsByTagName('body')[0];
+    const width = w.innerWidth || documentElement.clientWidth || body.clientWidth;
+    const height = w.innerHeight || documentElement.clientHeight || body.clientHeight;
 
-    this.setState({
-      query,
-    });
+    console.log('width: ', width);
+    console.log('height: ', height);
+    this.setState({ width, height });
+  };
 
-    const { switchGHMenu } = this.props;
-    switchGHMenu(query);
+  handleClickCreate = () => {
+    // push(path.private);
+    console.log(this.owlCarousal);
+    this.owlCarousal.create();
+  };
+
+  handleClickDestroy = () => {
+    // push(path.private);
+    console.log(this.owlCarousal);
+    this.owlCarousal.destory();
   };
 
   render() {
-    const { query } = this.state;
-    const { github } = this.props;
-    const data = github.repos.data[query] || [];
-    let output;
-
-    if (github.repos.status === STATUS.SUCCESS) {
-      if (data.length) {
-        output = (
-          <GitHubGrid data-type={query} data-testid="GitHubGrid">
-            {github.repos.data[query].map(d => (
-              <li key={d.id}>
-                <Item href={d.html_url} target="_blank">
-                  <Image src={d.owner.avatar_url} alt={d.owner.login} />
-                  <ItemHeader>
-                    <Heading as="h5" lineHeight={1}>
-                      {d.name}
-                    </Heading>
-                    <small>{d.owner.login}</small>
-                  </ItemHeader>
-                  <Paragraph>{d.description}</Paragraph>
-                </Item>
-              </li>
-            ))}
-          </GitHubGrid>
-        );
-      } else {
-        output = <h3>Nothing found</h3>;
-      }
-    } else {
-      output = <Loader block />;
-    }
-
+    const { videoList } = this.props;
     return (
-      <div key="GitHub" data-testid="GitHubWrapper">
-        <Flex justifyContent="center">
-          <ButtonGroup role="group" aria-label="GitHub Selector" data-testid="GitHubSelector">
-            <Button
-              animate={query === 'react' && github.repos.status === 'running'}
-              bordered={query !== 'react'}
-              size="lg"
-              data-query="react"
-              onClick={this.handleClick}
-            >
-              React
-            </Button>
-            <Button
-              animate={query === 'redux' && github.repos.status === 'running'}
-              bordered={query !== 'redux'}
-              size="lg"
-              data-query="redux"
-              onClick={this.handleClick}
-            >
-              Redux
-            </Button>
-          </ButtonGroup>
-        </Flex>
-        {output}
-      </div>
+      <OwlCarousel
+        key="VideoCarousel"
+        data-testid="VideoCarouselWrapper"
+        className="owl-theme"
+        loop
+        margin={5}
+        nav
+        ref={el => {
+          this.owlCarousal = el;
+        }}
+      >
+        {videoList.success
+          ? videoList.data.entries.map((item, index) => <MovieCard key={index} video={item} />)
+          : null}
+      </OwlCarousel>
     );
   }
 }
 
 /* istanbul ignore next */
 function mapStateToProps(state) {
-  return { video: state.video };
+  return { videoList: state.video.videoList };
 }
 
 const mapDispatchToProps = dispatch => ({
-  switchGHMenu: query => dispatch(switchMenu(query)),
-  getGHRepos: query => dispatch(getRepos(query)),
-  showLoginAlert: (messages, params) => dispatch(showAlert(messages, params)),
+  getVideoList: () => dispatch(getVideoList()),
 });
 
 export default connect(

@@ -1,7 +1,6 @@
-import { parseError } from 'modules/client';
 import { handleActions } from 'modules/helpers';
 
-import { STATUS, VideoActionTypes } from 'constants/index';
+import { VideoActionTypes } from 'constants/index';
 
 export const videoState = {
   videoList: {
@@ -9,13 +8,14 @@ export const videoState = {
     success: false,
     error: false,
   },
+  videoPlaying: null,
   fetching: null,
 };
 
 export default {
   video: handleActions(
     {
-      [VideoActionTypes.VIDEO_GET_LIST_REQUEST]: (draft, { payload }) => {
+      [VideoActionTypes.VIDEO_GET_LIST_REQUEST]: draft => {
         draft.fetching = 'VIDEO_GET_LIST_REQUEST';
       },
       [VideoActionTypes.VIDEO_GET_LIST_SUCCESS]: (draft, { payload }) => {
@@ -29,6 +29,12 @@ export default {
         draft.videoList.success = false;
         draft.videoList.error = payload;
         draft.fetching = null;
+      },
+      [VideoActionTypes.VIDEO_SET_PLAY_VIDEO]: (draft, { payload }) => {
+        draft.videoPlaying = payload;
+      },
+      [VideoActionTypes.VIDEO_RESET_PLAY_VIDEO]: draft => {
+        draft.videoPlaying = null;
       },
     },
     videoState,

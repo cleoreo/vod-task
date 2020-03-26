@@ -19,16 +19,6 @@ export const VideoActionTypes = keyMirror({
   VIDEO_GET_LIST_REQUEST: undefined,
   VIDEO_GET_LIST_SUCCESS: undefined,
   VIDEO_GET_LIST_FAILURE: undefined,
+  VIDEO_SET_PLAY_VIDEO: undefined,
+  VIDEO_RESET_PLAY_VIDEO: undefined,
 });
-
-/**
- * @constant {Object} STATUS
- * @memberof Constants
- */
-export const STATUS = {
-  IDLE: 'idle',
-  RUNNING: 'running',
-  READY: 'ready',
-  SUCCESS: 'success',
-  ERROR: 'error',
-};
