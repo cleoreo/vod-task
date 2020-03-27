@@ -13,13 +13,13 @@ import { utils } from 'styled-minimal';
 import config from 'config';
 
 import Home from 'routes/Home';
-import Private from 'routes/Private';
+import History from 'routes/History';
+import Video from 'routes/Video';
 import NotFound from 'routes/NotFound';
 
 import Header from 'components/Header';
 import SystemAlerts from 'components/SystemAlerts';
 
-import Footer from 'components/Footer';
 import GlobalStyles from 'components/GlobalStyles';
 import path from './routes';
 
@@ -61,8 +61,8 @@ export class App extends React.Component {
             <Main>
               <Switch>
                 <Route exact path={path.home} component={Home} />
-                <Route exact path={path.history} component={Private} />
-                <Route path={path.private} component={Private} />
+                <Route exact path={path.history} component={History} />
+                <Route path={path.video} component={Video} />
                 <Route component={NotFound} />
               </Switch>
             </Main>

@@ -11,14 +11,6 @@ import { setPlayVideo } from '../actions';
 
 const { spacer } = utils;
 
-const CardWrapper = styled.div`
-  display: inline-block;
-  position: relative;
-  min-height: 200px;
-  height: 100%;
-  width: 100%;
-`;
-
 const CardImage = styled(Image)`
   align-items: center;
   background-color: rgba(0, 0, 0, 0.6);
@@ -58,6 +50,7 @@ const LoaderWrapper = styled(Container)`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
 `;
 
 class MovieCard extends React.PureComponent {
@@ -78,8 +71,10 @@ class MovieCard extends React.PureComponent {
     const { imageLoaded, imageLoadError } = this.state;
     const { setVideoToPlay, video } = this.props;
     return (
-      <CardWrapper
+      <div
+        tabIndex="0"
         className="item"
+        onKeyPress={(e) => { e.key === "Enter" ? setVideoToPlay(video) : '' }}
         onClick={() => {
           setVideoToPlay(video);
         }}
@@ -101,7 +96,7 @@ class MovieCard extends React.PureComponent {
             <NoImageText>{video.title}</NoImageText>
           </NoImageContainer>
         )}
-      </CardWrapper>
+      </div>
     );
   }
 }

@@ -51,7 +51,7 @@ const Heading = styled.h1`
   })};
 `;
 
-class Home extends React.PureComponent {
+export class History extends React.PureComponent {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     videoToPlay: PropTypes.object,
@@ -108,4 +108,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(History);

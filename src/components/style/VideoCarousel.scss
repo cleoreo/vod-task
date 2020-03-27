@@ -1,0 +1,14 @@
+.movies-container {
+  width: 100%;
+  column-count: 2;
+  column-gap: 10px;
+  .item {
+    width: 100%;
+    min-height: 250px;
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+}
