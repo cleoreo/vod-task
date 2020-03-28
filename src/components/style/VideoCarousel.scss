@@ -1,10 +1,10 @@
 .movies-container {
   width: 100%;
-  column-count: 2;
-  column-gap: 10px;
   .item {
-    width: 100%;
+    width: calc(50vw - 36px);
     min-height: 250px;
+    float: left;
+    margin: 10px;
     img {
       display: block;
       width: 100%;

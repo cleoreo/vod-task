@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import Header from 'components/Header';
 import { Container, Heading } from 'styled-minimal';
 import Background from 'components/Background';
 
@@ -21,14 +22,17 @@ const StyledContainer = styled(Container)`
 `;
 
 const NotFound = () => (
-  <Background key="404">
-    <StyledContainer layout="fullScreen" verticalPadding>
-      <Heading fontSize={100}>404</Heading>
-      <Link to="/">
-        <Heading as="h2">go home</Heading>
-      </Link>
-    </StyledContainer>
-  </Background>
+  <div>
+    <Header />
+    <Background key="404">
+      <StyledContainer layout="fullScreen" verticalPadding>
+        <Heading fontSize={100}>404</Heading>
+        <Link to="/">
+          <Heading as="h2">go home</Heading>
+        </Link>
+      </StyledContainer>
+    </Background>
+  </div>
 );
 
 export default NotFound;

@@ -1,102 +1,99 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-// styles
-import styled from 'styled-components';
-import './styles/home.scss';
+
+// redux
+import { getVideoList, setPlayVideo } from 'actions';
+
 // components
-import { Button, Container, utils } from 'styled-minimal';
 import VideoPlayer from 'react-video-js-player';
-import VideoCarousel from 'components/VideoCarousel';
+
 // routes
-
-const { spacer } = utils;
-
-const HomeContainer = styled(Container)`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  min-height: 100vh;
-`;
-
-const Header = styled.div`
-  margin-bottom: ${spacer(3)};
-  text-align: center;
-
-  svg {
-    height: 10rem;
-    width: auto;
-
-    ${/* sc-custom '@media-query' */ utils.responsive({
-      lg: `
-        height: 15rem;
-     `,
-    })};
-  }
-`;
-
-const Heading = styled.h1`
-  color: #fff;
-  font-size: 3.5rem;
-  line-height: 1.4;
-  margin-bottom: ${spacer(3)};
-  margin-top: 0;
-  text-align: center;
-
-  ${/* sc-custom '@media-query' */ utils.responsive({
-    lg: `
-      font-size: 4rem;
-    `,
-  })};
-`;
+import path from 'routes/index';
+import { push } from '../modules/history';
 
 class Video extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      width: window.innerWidth,
+      height: window.innerHeight,
+      video: props.videoToPlay,
+    };
+
+    if (!props.videoToPlay || !props.videoList.success) {
+      props.getVideoList();
+    }
+
+    if (!props.match.params.id) {
+      push(path.home);
+    }
+  }
+
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    getVideoList: PropTypes.func,
+    match: PropTypes.object.isRequired,
+    setVideoToPlay: PropTypes.func,
+    videoList: PropTypes.object,
     videoToPlay: PropTypes.object,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {};
+  componentDidMount() {
+    this.updateDimensions();
+    window.addEventListener('resize', this.updateDimensions);
   }
 
-  handleClickCreate = () => {
-    // push(path.private);
-    // console.log(this.owlCarousal);
-    // this.owlCarousal.create();
-    this.videoPlayer.requestFullscreen();
-  };
+  static getDerivedStateFromProps(props) {
+    if (props.videoList.success) {
+      const { match, videoList, setVideoToPlay } = props;
+      const { id } = match.params;
+      const list = videoList.data.entries;
+      const video = list.find(o => o.id === id);
+      setVideoToPlay(video);
+      return { video };
+    }
+    return null;
+  }
 
-  handleClickDestroy = () => {
-    // push(path.private);
-    console.log(this.owlCarousal);
-    this.owlCarousal.destory();
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  }
+
+  updateDimensions = () => {
+    const w = window;
+    const d = document;
+    const { documentElement } = d;
+    const body = d.getElementsByTagName('body')[0];
+    const width = w.innerWidth || documentElement.clientWidth || body.clientWidth;
+    const height = w.innerHeight || documentElement.clientHeight || body.clientHeight;
+
+    this.setState({ width, height });
+
+    if (this.videoPlayer) {
+      this.videoPlayer.width(width);
+      this.videoPlayer.height(height);
+    }
   };
 
   onPlayerReady = player => {
-    console.log('Player is ready: ', player);
     this.videoPlayer = player;
   };
 
   render() {
-    const { videoToPlay } = this.props;
+    const { width, height, video } = this.state;
     return (
-      <HomeContainer key="Home" data-testid="HomeWrapper" verticalPadding>
-        {videoToPlay ? (
+      <div key="Video" data-testid="VideoWrapper">
+        {video ? (
           <VideoPlayer
             controls={true}
             preload="auto"
-            src={videoToPlay.contents[0].url}
-            width={videoToPlay.contents[0].width}
-            height={videoToPlay.contents[0].height}
+            src={video.contents[0].url}
+            width={width}
+            height={height}
             onReady={this.onPlayerReady}
           />
         ) : null}
-        <VideoCarousel />
-        <Button onClick={this.handleClickCreate}>Play</Button>
-      </HomeContainer>
+      </div>
     );
   }
 }
@@ -105,7 +102,16 @@ class Video extends React.PureComponent {
 function mapStateToProps(state) {
   return {
     videoToPlay: state.video.videoPlaying,
+    videoList: state.video.videoList,
   };
 }
 
-export default connect(mapStateToProps)(Video);
+const mapDispatchToProps = dispatch => ({
+  getVideoList: () => dispatch(getVideoList()),
+  setVideoToPlay: video => dispatch(setPlayVideo(video)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Video);

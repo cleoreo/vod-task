@@ -1,15 +1,16 @@
 import React from 'react';
-import styled from 'styled-components';
-
-import { Container, Image, utils } from 'styled-minimal';
-import Loader from 'components/Loader';
-
-import './style/MovieCard.scss';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setPlayVideo } from '../actions';
 
-const { spacer } = utils;
+import { Container, Image } from 'styled-minimal';
+
+import Loader from 'components/Loader';
+import styled from 'styled-components';
+import './style/MovieCard.scss';
+
+import path, { getPath } from 'routes/index';
+import { push } from '../modules/history';
+import { setPlayVideo } from '../actions';
 
 const CardImage = styled(Image)`
   align-items: center;
@@ -67,16 +68,25 @@ class MovieCard extends React.PureComponent {
     video: PropTypes.object.isRequired,
   };
 
+  onMovieCardClick = () => {
+    const { setVideoToPlay, video } = this.props;
+    setVideoToPlay(video);
+
+    push(getPath(path.video, { id: video.id }));
+  };
+
   render() {
     const { imageLoaded, imageLoadError } = this.state;
-    const { setVideoToPlay, video } = this.props;
+    const { video } = this.props;
     return (
       <div
-        tabIndex="0"
+        tabIndex={0}
         className="item"
-        onKeyPress={(e) => { e.key === "Enter" ? setVideoToPlay(video) : '' }}
+        onKeyPress={e => {
+          e.key === 'Enter' ? this.onMovieCardClick() : '';
+        }}
         onClick={() => {
-          setVideoToPlay(video);
+          this.onMovieCardClick();
         }}
       >
         {imageLoaded || !video.images[0].url ? null : (

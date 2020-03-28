@@ -17,7 +17,6 @@ import History from 'routes/History';
 import Video from 'routes/Video';
 import NotFound from 'routes/NotFound';
 
-import Header from 'components/Header';
 import SystemAlerts from 'components/SystemAlerts';
 
 import GlobalStyles from 'components/GlobalStyles';
@@ -34,7 +33,6 @@ const AppWrapper = styled.div`
 
 const Main = styled.main`
   min-height: 100vh;
-  padding: ${utils.px(headerHeight)} 0 0;
 `;
 
 export class App extends React.Component {
@@ -57,12 +55,12 @@ export class App extends React.Component {
               titleTemplate={`%s | ${config.name}`}
               titleAttributes={{ itemprop: 'name', lang: 'pt-br' }}
             />
-            <Header dispatch={dispatch} />
             <Main>
               <Switch>
                 <Route exact path={path.home} component={Home} />
                 <Route exact path={path.history} component={History} />
-                <Route path={path.video} component={Video} />
+                <Route exact path={path.video} component={Video} />
+                <Route exact path={path.videoRoot} component={Video} />
                 <Route component={NotFound} />
               </Switch>
             </Main>
