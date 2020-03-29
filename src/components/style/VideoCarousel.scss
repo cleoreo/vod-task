@@ -1,10 +1,15 @@
 .movies-container {
   width: 100%;
+
   .item {
     width: calc(50vw - 36px);
-    min-height: 250px;
     float: left;
     margin: 10px;
+
+    .item-main-container {
+      min-height: calc((50vw - 36px)* 1.4813);
+    }
+
     img {
       display: block;
       width: 100%;

@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 // styles
 import styled from 'styled-components';
-import './styles/home.scss';
+import './styles/Home.scss';
 // components
 import { Button, Container, utils } from 'styled-minimal';
 import VideoPlayer from 'react-video-js-player';

@@ -89,23 +89,26 @@ class MovieCard extends React.PureComponent {
           this.onMovieCardClick();
         }}
       >
-        {imageLoaded || !video.images[0].url ? null : (
-          <LoaderWrapper>
-            <Loader block />
-          </LoaderWrapper>
-        )}
-        {video.images[0].url && !imageLoadError ? (
-          <CardImage
-            src={video.images[0].url}
-            alt={video.title}
-            onLoad={() => this.setState({ imageLoaded: true })}
-            onError={() => this.setState({ imageLoaded: true, imageLoadError: true })}
-          />
-        ) : (
-          <NoImageContainer>
-            <NoImageText>{video.title}</NoImageText>
-          </NoImageContainer>
-        )}
+        <div className="item-main-container">
+          {imageLoaded || !video.images[0].url ? null : (
+            <LoaderWrapper>
+              <Loader block />
+            </LoaderWrapper>
+          )}
+          {video.images[0].url && !imageLoadError ? (
+            <CardImage
+              src={video.images[0].url}
+              alt={video.title}
+              onLoad={() => this.setState({ imageLoaded: true })}
+              onError={() => this.setState({ imageLoaded: true, imageLoadError: true })}
+            />
+          ) : (
+            <NoImageContainer>
+              <NoImageText>{video.title}</NoImageText>
+            </NoImageContainer>
+          )}
+        </div>
+        <span className="movie-name">{video.title}</span>
       </div>
     );
   }

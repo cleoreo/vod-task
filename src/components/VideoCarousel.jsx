@@ -75,7 +75,7 @@ export class VideoCarousel extends React.Component {
             data-testid="VideoCarouselWrapper"
             className="owl-theme"
             loop={false}
-            margin={5}
+            margin={10}
             nav={false}
             dots={false}
             responsive={responsive}

@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 // styles
 import styled from 'styled-components';
-import './styles/home.scss';
+import './styles/Home.scss';
 
 // components
 import Header from 'components/Header';
@@ -20,7 +20,7 @@ const HomeContainer = styled(Container)`
 
 const CarouselWrapper = styled.div`
   width: 100%;
-  padding: 20px 0 0 0;
+  padding: 70px 0 0 0;
 `;
 
 class Home extends React.PureComponent {

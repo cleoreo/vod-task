@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-
+import './styles/Video.scss';
 // redux
 import { getVideoList, setPlayVideo } from 'actions';
 
@@ -10,7 +10,7 @@ import VideoPlayer from 'react-video-js-player';
 
 // routes
 import path from 'routes/index';
-import { push } from '../modules/history';
+import history, { push, goBack } from '../modules/history';
 
 class Video extends React.PureComponent {
   constructor(props) {
@@ -79,10 +79,18 @@ class Video extends React.PureComponent {
     this.videoPlayer = player;
   };
 
+  onVideoEnd = () => {
+    if (history.action === 'POP') {
+      push(path.home);
+    } else {
+      goBack();
+    }
+  };
+
   render() {
     const { width, height, video } = this.state;
     return (
-      <div key="Video" data-testid="VideoWrapper">
+      <div className="video-wrapper" key="Video" data-testid="VideoWrapper">
         {video ? (
           <VideoPlayer
             controls={true}
@@ -91,6 +99,7 @@ class Video extends React.PureComponent {
             width={width}
             height={height}
             onReady={this.onPlayerReady}
+            onEnd={this.onVideoEnd}
           />
         ) : null}
       </div>
