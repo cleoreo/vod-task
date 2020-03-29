@@ -6,7 +6,7 @@ import './styles/History.scss';
 // components
 import Header from 'components/Header';
 import HistoryCard from 'components/HistoryCard';
-import { Link } from 'styled-minimal';
+import { Container } from 'styled-minimal';
 // routes
 
 export class History extends React.PureComponent {
@@ -22,7 +22,7 @@ export class History extends React.PureComponent {
   render() {
     const { videoHistory } = this.props;
     return (
-      <div className="history-wrapper" key="history" data-testid="HistoryContainer">
+      <Container className="history-wrapper" key="history" data-testid="HistoryContainer">
         <Header />
         <div className="history-container">
           {videoHistory.length > 0 ? (
@@ -31,7 +31,7 @@ export class History extends React.PureComponent {
             <p>No history</p>
           )}
         </div>
-      </div>
+      </Container>
     );
   }
 }
