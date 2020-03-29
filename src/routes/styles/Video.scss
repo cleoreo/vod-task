@@ -1,5 +1,12 @@
 .video-wrapper {
+  position: relative;
   background: black;
   min-height: 100vh;
   min-width: 100vw;
+}
+.video-go-back-btn {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  z-index: 1;
 }

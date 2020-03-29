@@ -1,12 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+
+// style
 import './styles/Video.scss';
 // redux
 import { getVideoList, setPlayVideo } from 'actions';
 
 // components
 import VideoPlayer from 'react-video-js-player';
+import { Button } from 'styled-minimal';
 
 // routes
 import path from 'routes/index';
@@ -91,6 +94,9 @@ class Video extends React.PureComponent {
     const { width, height, video } = this.state;
     return (
       <div className="video-wrapper" key="Video" data-testid="VideoWrapper">
+        <Button className="video-go-back-btn" onClick={this.onVideoEnd} size="xl">
+          <span ml={2}>Go back</span>
+        </Button>
         {video ? (
           <VideoPlayer
             controls={true}
