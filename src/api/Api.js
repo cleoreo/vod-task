@@ -1,7 +1,7 @@
 import apisauce from 'apisauce';
-import config from '../config';
+import config from '../../config/config';
 
-let Api = (baseURL = config.proxyUrl + config.API_URL) => {
+const Api = (baseURL = config.proxyUrl + config.API_URL) => {
   const api = apisauce.create({
     baseURL,
     headers: {

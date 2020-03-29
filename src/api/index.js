@@ -1,4 +1,4 @@
-import config from '../config';
+import config from '../../config/config';
 import Fixture from './Fixtures';
 import Api from './Api';
 

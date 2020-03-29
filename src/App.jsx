@@ -8,9 +8,7 @@ import styled, { ThemeProvider } from 'styled-components';
 
 import history from 'modules/history';
 import theme, { headerHeight } from 'modules/theme';
-import { utils } from 'styled-minimal';
 
-import config from 'config';
 
 import Home from 'routes/Home';
 import History from 'routes/History';
@@ -41,19 +39,14 @@ export class App extends React.Component {
   };
 
   render() {
-    const { dispatch } = this.props;
-
     return (
       <Router history={history}>
         <ThemeProvider theme={theme}>
           <AppWrapper>
             <Helmet
               defer={false}
-              htmlAttributes={{ lang: 'pt-br' }}
               encodeSpecialCharacters={true}
-              defaultTitle={config.name}
-              titleTemplate={`%s | ${config.name}`}
-              titleAttributes={{ itemprop: 'name', lang: 'pt-br' }}
+              defaultTitle="Vod Task"
             />
             <Main>
               <Switch>
