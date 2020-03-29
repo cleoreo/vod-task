@@ -77,7 +77,6 @@ export class VideoCarousel extends React.Component {
             loop={false}
             margin={10}
             nav={false}
-            dots={false}
             responsive={responsive}
           >
             {items}
