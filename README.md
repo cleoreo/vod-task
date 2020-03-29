@@ -1,50 +1,45 @@
-# React-Redux-Saga Boilerplate
+# Vod-task
 
-[![Build Status](https://travis-ci.org/gilbarbara/react-redux-saga-boilerplate.svg?branch=master)](https://travis-ci.org/gilbarbara/react-redux-saga-boilerplate) [![Dependencies](https://david-dm.org/gilbarbara/react-redux-saga-boilerplate.svg)](https://david-dm.org/gilbarbara/react-redux-saga-boilerplate) [![Maintainability](https://api.codeclimate.com/v1/badges/eb66aa0049fa03acbbf3/maintainability)](https://codeclimate.com/github/gilbarbara/react-redux-saga-boilerplate/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/eb66aa0049fa03acbbf3/test_coverage)](https://codeclimate.com/github/gilbarbara/react-redux-saga-boilerplate/test_coverage)
+The project used [react-redux-saga-boilerplate](https://github.com/gilbarbara/react-redux-saga-boilerplate) to start with.
 
-[Demo](https://redux-saga.react-boilerplate.com/)
+## How to start
+    
+    clone the project, and then run
+    
+    npm install
+    npm start
+    
+    
+## Project Structure
+    assets
+    build
+    config
+        |- config.js        // Api config is stored in here
+        |- env.js
+        |- paths.js
+        |- webpack.confic.js
+        |- webpackDevServer.js
+    cypress
+    node_modules
+    src
+    |- actions              // redux actions stored in here
+    |- api                  // api call stored in here
+        |- Fixtures         // store expexted api result json here, used for development
+        |- Api.js           // real api call function stored in here
+        |- index.js         // file to be imported when need to call api
+    |- components
+    |- constants
+    |- modules
+    |- reducers             // redux reducers stored in here
+    |- routes               // store containers of each pages
+        |-index.js          // routes paths is stored in here              
+    |- sagas                // sagas stored in here
+    |- store                // redux store
+        |- index.js         // persist config can be changed in here
+    |- vendor               // modernizer
+    tools                   // build tools
+    package.json
 
-### Provides
 
-- react ^16.x
-- react-router 4.x
-- react-helmet 5.x
-- styled-components 4.x
-- redux 4.x
-- redux-saga 0.16.x
-- redux-persist 5.x
+### Remarks
 
-### Development
-
-- webpack-dev-server 3.x
-- react-hot-loader 4.x
-- redux-devtools (with browser plugin)
-
-`npm start`
-
-### Building
-
-- webpack 4.x
-- babel 7.x
-
-`npm run build`
-
-### Code Quality
-
-- eslint 5.x
-- stylelint 9.x
-
-`npm run lint` / `npm run lint:styles`
-
-### Unit Testing
-
-- jest 23.x
-- enzyme 3.x
-
-`npm test`
-
-### End 2 End Testing
-
-- cypress 3.0.x
-
-`npm run test:e2e`
