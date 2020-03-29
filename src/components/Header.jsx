@@ -40,8 +40,7 @@ const HeaderContainer = styled(Container)`
   padding-top: ${spacer(2)};
 `;
 
-const History = styled(Link)`
-  margin-left: auto;
+const HeaderLink = styled(Link)`
   color: white;
 `;
 
@@ -50,7 +49,8 @@ export default class Header extends React.PureComponent {
     return (
       <HeaderWrapper>
         <HeaderContainer>
-          <History to={path.history}>History</History>
+          <HeaderLink to={path.home}>Home</HeaderLink>
+          <HeaderLink to={path.history}>History</HeaderLink>
         </HeaderContainer>
       </HeaderWrapper>
     );

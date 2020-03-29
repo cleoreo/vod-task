@@ -35,9 +35,9 @@ class Home extends React.PureComponent {
 
   render() {
     return (
-      <div>
+      <div key="Home" data-testid="HomeWrapper">
         <Header />
-        <HomeContainer key="Home" data-testid="HomeWrapper" verticalPadding>
+        <HomeContainer verticalPadding>
           <CarouselWrapper>
             <VideoCarousel />
           </CarouselWrapper>
