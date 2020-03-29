@@ -1,7 +1,7 @@
 // @flow
 /**
- * @module Actions/User
- * @desc User Actions
+ * @module Actions/Video
+ * @desc Video Actions
  */
 import { createActions } from 'redux-actions';
 

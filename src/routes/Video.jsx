@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 // style
 import './styles/Video.scss';
 // redux
-import { getVideoList, setPlayVideo } from 'actions';
+import { getVideoList, setPlayVideo, addToHistory } from 'actions';
 
 // components
 import VideoPlayer from 'react-video-js-player';
@@ -34,6 +34,7 @@ class Video extends React.PureComponent {
   }
 
   static propTypes = {
+    addToHistoryList: PropTypes.func.isRequired,
     getVideoList: PropTypes.func,
     match: PropTypes.object.isRequired,
     setVideoToPlay: PropTypes.func,
@@ -48,10 +49,11 @@ class Video extends React.PureComponent {
 
   static getDerivedStateFromProps(props) {
     if (props.videoList.success) {
-      const { match, videoList, setVideoToPlay } = props;
+      const { match, videoList, setVideoToPlay, addToHistoryList } = props;
       const { id } = match.params;
       const list = videoList.data.entries;
       const video = list.find(o => o.id === id);
+      addToHistoryList(video);
       setVideoToPlay(video);
       return { video };
     }
@@ -124,6 +126,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => ({
   getVideoList: () => dispatch(getVideoList()),
   setVideoToPlay: video => dispatch(setPlayVideo(video)),
+  addToHistoryList: video => dispatch(addToHistory(video)),
 });
 
 export default connect(
