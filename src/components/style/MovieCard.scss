@@ -23,20 +23,23 @@
 }
 
 .item {
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
   position: relative;
-  height: auto;
+  height: 100%;
   width: 100%;
+  align-items: stretch;
 
   .item-main-container {
-    display: inline-block;
+    display: flex;
+    flex-grow: 1;
     position: relative;
     width: 100%;
     min-height: 300px;
   }
 
   .movie-name {
-    display: inline-block;
+    display: flex;
     padding: 10px 0;
     font-size: 1.5rem;
     min-height: 60px;
