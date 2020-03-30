@@ -2,6 +2,8 @@
 
 The project used [react-redux-saga-boilerplate](https://github.com/gilbarbara/react-redux-saga-boilerplate) to start with.
 
+[Demo](https://cleoreo.github.io/vod-task/)
+
 ## How to start
     
     clone the project, and then run
